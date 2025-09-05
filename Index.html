@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Age Calculator</title>
+  <style>
+    body { font-family: Arial; text-align: center; margin-top: 50px; }
+    input, button { padding: 10px; margin: 10px; font-size: 16px; }
+    #result { margin-top: 20px; font-size: 18px; }
+  </style>
+</head>
+<body>
+  <h1>Age Calculator</h1>
+  <input type="date" id="dob">
+  <button onclick="calculateAge()">Calculate</button>
+  <div id="result"></div>
+
+  <script>
+    function calculateAge() {
+      const dob = new Date(document.getElementById("dob").value);
+      const now = new Date();
+      
+      if (!dob || dob > now) {
+        document.getElementById("result").innerText = "Please enter a valid date.";
+        return;
+      }
+
+      let years = now.getFullYear() - dob.getFullYear();
+      let months = now.getMonth() - dob.getMonth();
+      let days = now.getDate() - dob.getDate();
+      
+      if (days < 0) {
+        months--;
+        days += new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+      }
+      if (months < 0) {
+        years--;
+        months += 12;
+      }
+
+      const seconds = Math.floor((now - dob) / 1000);
+
+      document.getElementById("result").innerHTML = 
+        `🎂 You are ${years} years, ${months} months, and ${days} days old.<br>
+         ⏳ That's about ${seconds.toLocaleString()} seconds!`;
+    }
+  </script>
+</body>
+</html>
